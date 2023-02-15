@@ -7,8 +7,7 @@ public class Epargne extends Client implements Operation{
 	private int tauxInteret;
 	
 	//constructeur 
-	public Epargne(String epargneId, double solde, int tauxInteret, String idC , String name) {
-		super(idC, name);
+	public Epargne(String epargneId, double solde, int tauxInteret) {
 		this.epargneId = epargneId;
 		this.solde = solde;
 		this.tauxInteret = tauxInteret;

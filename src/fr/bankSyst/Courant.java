@@ -7,8 +7,7 @@ public class Courant extends Client  implements Operation{
 	private int decouvert;
 	
 	//Constructeur
-	public Courant(String courantId, double solde, int decouvert, String idC, String name) {
-		super(idC,name);
+	public Courant(String courantId, double solde, int decouvert) {
 		this.courantId = courantId;
 		this.solde = solde;
 		this.decouvert = decouvert;
