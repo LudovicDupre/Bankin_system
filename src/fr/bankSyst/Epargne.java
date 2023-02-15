@@ -12,6 +12,8 @@ public class Epargne extends Client implements Operation{
 		this.solde = solde;
 		this.tauxInteret = tauxInteret;
 	}
+	public Epargne() {
+	}
 	//setters getters
 	public String getEpargneId() {
 		return epargneId;
@@ -31,7 +33,8 @@ public class Epargne extends Client implements Operation{
 	public void setTauxInteret(int tauxInteret) {
 		this.tauxInteret = tauxInteret;
 	}
-	
-	
-	
+	@Override
+	public String toString() {
+		return " Compte Epargne : \n Solde : "+solde+"\n Taux d'intérêt : "+tauxInteret;
+	}
 }

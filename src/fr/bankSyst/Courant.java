@@ -12,7 +12,8 @@ public class Courant extends Client  implements Operation{
 		this.solde = solde;
 		this.decouvert = decouvert;
 	}
-	
+	public Courant() {
+	}
 	//setters getters
 	public String getCourantId() {
 		return courantId;
@@ -32,5 +33,8 @@ public class Courant extends Client  implements Operation{
 	public void setDecouvert(int decouvert) {
 		this.decouvert = decouvert;
 	} 
-	
+	@Override
+	public String toString() {
+		return " Compte Courant : \n Solde : "+solde+"\n Découvert autorisé : "+decouvert;
+	}
 }

@@ -8,32 +8,33 @@ public interface Operation {
 	 * @param z  solde du débiteur
 	 * @return solde du débiteur après débit
 	 */
-	static double virement(String x , String y, double z) {
+	static double virement(String idCompte , String idCompteD, double montant) {
 		
-		return z;
+		return montant;
 	}
 	/** retrait de y sur le compte x
 	 * @param x ID du compte
 	 * @param y- solde avec débit
 	 * @return solde après débit
 	 */
-	static double retrait(String x, double y, double montant) {
+	static double retrait(String idCompte, double solde, double montant) {
 		
-		return y-montant;
+		return solde-montant;
 	}
 	/**
 	 * @param x ID du compte
 	 * @param y solde avant ajout 
 	 * @return solde nouveau
 	 */
-	static double versement(String x, double y, double montant) {
-		return y+montant;
+	static double versement(String idCompte, double solde, double montant) {
+		
+		return solde+montant;
 	}
 	/**
-	 * @param y solde du compte
+	 * @param solde du compte
 	 * @return un string de mise en forme 
 	 */
-	static String soldeAffichage(double y) {
-		return "Solde de votre compte : "+ y;
+	static String soldeAffichage(double solde) {
+		return "Solde de votre compte : "+ solde;
 	}
 }
