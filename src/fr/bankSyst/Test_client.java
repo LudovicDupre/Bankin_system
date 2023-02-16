@@ -1,4 +1,6 @@
 package fr.bankSyst;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -10,14 +12,13 @@ public class Test_client {
 
 	public static void main(String[] args)  {
 
-		//init des maps
 		HashMap<String, Savings> savingsDB =  intiSDB();
 		HashMap<String, Current> currentDB =  intiCDB();
 		ArrayList< Client> listClient   = initClient();
 
-		System.out.println("Who are you?");
+		System.out.println("Who are you?"); // replace connexion
 		String identity = sc.next();
-		//choix du compte
+
 		System.out.println(mainMenu());
 		int choice1 =-1;
 		while(choice1!=3) {
@@ -25,36 +26,76 @@ public class Test_client {
 			while (choice1>3 || choice1<0)  {choice1 = sc.nextInt();}
 			switch(choice1)   {
 
-			
-			case 1 : System.out.println(opMenu());// Savings
-			System.out.println(savingsDB.get(identity));
+			case 1 :  Savings accountS = savingsDB.get(identity);
+			System.out.println(accountS+"\n"); //Savings
+			System.out.println(opMenu());
+
 			int choice2 = -1;
 			while (choice2!=4) {
 				choice2 = sc.nextInt();
 				while (choice2>4 || choice2<0) {choice2 =sc.nextInt();}
-				
+
 				switch(choice2) {
-				
-				case 1 : System.out.println("Back to operation menu\n\n"+opMenu());
-				break;//retrait(String x, double y, double montant)
-				case 2: System.out.println("Back to operation menu\n\n"+opMenu()); break;//versement(String x, double y, double montant)
-				case 3: System.out.println("Back to operation menu\n\n"+opMenu()); break;//virement(String x , String y, double z)
+
+				case 1: System.out.println("Please enter amount you wish to withdraw :");
+				int amountW = sc.nextInt();
+				//withdrawal method + display new balance System.out.println(accountS+"\n");
+				System.out.println("Back to operation menu\n\n"+opMenu());	
+				break;
+
+				case 2: System.out.println("Please enter amount you wish to deposit :");
+				int amountD = sc.nextInt();
+				double newBalance = Operation.deposit( accountS.getBalance(), amountD);
+				accountS.setBalance(newBalance);
+				System.out.println(accountS+"\n");
+				System.out.println("Back to operation menu\n\n"+opMenu()); 
+				break;
+
+				case 3: System.out.println("Please enter amount you wish to move :");
+				int amountT = sc.nextInt();
+				System.out.println("Please enter receiving account :");
+				String receivingAccount = sc.next();
+				System.out.println(dateTransaction());
+				System.out.println("Back to operation menu\n\n"+opMenu()); 
+				break;
 				}
+
 			} System.out.println("Back to account menu\n\n"+mainMenu());
 			break;
 
-			case 2 : System.out.println(opMenu());// Current
-			System.out.println(currentDB.get(identity));
+			case 2 : Current accountC = currentDB.get(identity);
+			System.out.println(accountC+"\n");//Current
+			System.out.println(opMenu());
+
 			int choice3 = -1;
 			while (choice3!=4) {
 				choice3 = sc.nextInt();
 				while (choice3>4 || choice3<0) {choice3 =sc.nextInt();}
-
 				switch(choice3) {
 
-				case 1 :  System.out.println("Back to operation menu\n\n"+opMenu());break;//retrait(String x, double y, double montant)
-				case 2: System.out.println("Back to operation menu\n\n"+opMenu()); break;//versement(String x, double y, double montant)
-				case 3: System.out.println("Back to operation menu\n\n"+opMenu());break; //virement(String x , String y, double z)
+				case 1: System.out.println("Please enter amount you wish to withdraw :");
+				int amountW = sc.nextInt();
+				//withdrawal method + display new balance System.out.println(accountC+"\n");
+				double newBalance = Operation.withdrawal(choice3, amountW)
+				System.out.println("Back to operation menu\n\n"+opMenu());
+				break;
+
+				case 2: System.out.println("Please enter amount you wish to deposit :");
+				int amountD = sc.nextInt();
+				double newBalance2 = Operation.deposit( accountC.getBalance(), amountD);
+				accountC.setBalance(newBalance);
+				System.out.println(accountC+"\n");
+				System.out.println("Back to operation menu\n\n"+opMenu()); 
+				break;
+
+				case 3: System.out.println("Please enter amount you wish to move :");
+				int amountT = sc.nextInt();
+				System.out.println("Please enter receiving account :");
+				String receivingAccount = sc.next();
+				//transfer method + display new balance System.out.println(accountC+"\n");
+				System.out.println(dateTransaction());
+				System.out.println("Back to operation menu\n\n"+opMenu());
+				break;
 				}
 			}
 			System.out.println("Back to account menu\n\n"+mainMenu());
@@ -68,7 +109,7 @@ public class Test_client {
 	 */
 	public static HashMap<String, Savings> intiSDB() {
 		HashMap<String, Savings> savingsDB = new HashMap<String, Savings>(); 
-		Savings e1 =  new Savings("E605", 9000, 6);
+		Savings e1 = new Savings("E605", 9000, 6);
 		Savings e2 = new  Savings("H685", 8000, 5);
 		Savings e3 = new  Savings("R965", 1500, 2);
 		Savings e4 = new  Savings("D874", 875, 5);
@@ -97,7 +138,6 @@ public class Test_client {
 		currentDB.put("M95L", c4);
 		currentDB.put("A01B", c5);
 		return currentDB;
-
 	}
 	/** initialization client list
 	 * @return lclient list
@@ -124,5 +164,14 @@ public class Test_client {
 	 */
 	public static String opMenu() {
 		return "Select an operation :\n1 - Withdrawal. \n2 - Deposit. \n3 - Transfer. \n4 - Back to main menu.  ";
+	}
+/** method to get the date of the transaction
+ * @return dateFormatted 
+ */
+	public static String dateTransaction() {	
+		LocalDate date = LocalDate.now();
+		DateTimeFormatter formtter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String dateFormatted = date.format(formtter);
+		return dateFormatted;
 	}
 }

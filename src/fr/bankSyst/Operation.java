@@ -19,7 +19,7 @@ public interface Operation {
 	 * @param amount
 	 * @return
 	 */
-	static double withdrawal(String idAccount, double balance, double amount) {
+	static double withdrawal(double balance, double amount) {
 		
 		return balance-amount;
 	}
@@ -28,7 +28,7 @@ public interface Operation {
 	 * @param y solde avant ajout 
 	 * @return balance after operation
 	 */
-	static double deposit(String idCompte, double balance, double amount) {
+	static double deposit(double balance, double amount) {
 		
 		return balance+amount;
 	}
