@@ -8,7 +8,7 @@ public class Test_client {
 	static Scanner sc = new Scanner(System.in);
 	Client client = new Client();
 
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 
 		//init des maps
 		HashMap<String, Savings> savingsDB =  intiSDB();
