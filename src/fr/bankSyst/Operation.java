@@ -2,39 +2,41 @@ package fr.bankSyst;
 
 public interface Operation {
 	
-	/**virement qui prend l'id des deux comptes + le solde du debiteur
-	 * @param x ID compte débiteur
-	 * @param y ID compte créditeur
-	 * @param z  solde du débiteur
-	 * @return solde du débiteur après débit
-	 */
-	static double virement(String idCompte , String idCompteD, double montant) {
+/** transfer of an amount
+ * @param idAccount withdrawal from this account
+ * @param idAccount2 deposit from this account
+ * @param amount moved
+ * @param balance original balance
+ * @return balance after operation
+ */
+	static double transfer(String idAccount , String idAccount2, double amount, double balance) {
 		
-		return montant;
+		return balance;
 	}
-	/** retrait de y sur le compte x
-	 * @param x ID du compte
-	 * @param y- solde avec débit
-	 * @return solde après débit
+	/** withdrawal operation
+	 * @param idAccount to withdraw from
+	 * @param balance 
+	 * @param amount
+	 * @return
 	 */
-	static double retrait(String idCompte, double solde, double montant) {
+	static double withdrawal(String idAccount, double balance, double amount) {
 		
-		return solde-montant;
+		return balance-amount;
 	}
-	/**
+	/** deposit operation
 	 * @param x ID du compte
 	 * @param y solde avant ajout 
-	 * @return solde nouveau
+	 * @return balance after operation
 	 */
-	static double versement(String idCompte, double solde, double montant) {
+	static double deposit(String idCompte, double balance, double amount) {
 		
-		return solde+montant;
+		return balance+amount;
 	}
 	/**
-	 * @param solde du compte
-	 * @return un string de mise en forme 
+	 * @param balance of the account
+	 * @return string to print 
 	 */
-	static String soldeAffichage(double solde) {
-		return "Solde de votre compte : "+ solde;
+	static String balance(double balance) {
+		return "Balance of your account : "+ balance;
 	}
 }
