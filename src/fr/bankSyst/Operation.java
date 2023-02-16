@@ -1,27 +1,20 @@
 package fr.bankSyst;
 
 public interface Operation {
-	
-/** transfer of an amount
- * @param idAccount withdrawal from this account
- * @param idAccount2 deposit from this account
- * @param amount moved
- * @param balance original balance
- * @return balance after operation
- */
-	static double transfer(String idAccount , String idAccount2, double amount, double balance) {
-		
-		return balance;
-	}
+
 	/** withdrawal operation
 	 * @param idAccount to withdraw from
 	 * @param balance 
 	 * @param amount
 	 * @return
 	 */
-	static double withdrawal(double balance, double amount) {
-		
-		return balance-amount;
+	static double withdrawal(double balance, double amount, double overdraft) {	
+		if(balance-amount < overdraft) {
+			System.out.println("Operation Canceled : You cannot withdraw because your overdraft is reached.");
+			return balance;
+		}else {
+			return balance-amount;
+		}
 	}
 	/** deposit operation
 	 * @param x ID du compte
@@ -29,7 +22,6 @@ public interface Operation {
 	 * @return balance after operation
 	 */
 	static double deposit(double balance, double amount) {
-		
 		return balance+amount;
 	}
 	/**
