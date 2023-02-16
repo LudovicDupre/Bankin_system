@@ -2,6 +2,7 @@ package fr.bankSyst;
 
 public class Client {
 	
+	
 	private String idC;
 	private String name;
 	
@@ -12,6 +13,12 @@ public class Client {
 	}
 	public Client()  {
 	}
+	
+	@Override
+	public String toString() {
+		return "Client [idC=" + idC + ", name=" + name + "]";
+	}
+	
 	//setters getters
 	public String getIdC() {
 		return idC;
