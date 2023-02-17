@@ -16,7 +16,7 @@ public class Client {
 	
 	@Override
 	public String toString() {
-		return "Client [idC=" + idC + ", name=" + name + "]";
+		return "Client [idC = " + idC + ", name = " + name + "]";
 	}
 	
 	//setters getters

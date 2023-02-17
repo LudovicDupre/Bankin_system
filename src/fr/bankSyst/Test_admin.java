@@ -17,6 +17,7 @@ public class Test_admin {
 		Scanner sc = new Scanner(System.in);
 
 		int choice1 = -1;
+		
 		System.out.println(mainMenu());
 		while (choice1 != 3) {
 			choice1 = sc.nextInt();
@@ -32,145 +33,88 @@ public class Test_admin {
 
 				for (Client c : listClient) {
 					System.out.println(count + ": " + c);
+					System.out.println("--------------");
 					count++;
 				}
+				
 				System.out.println("Write his ID then press enter.");
 				String existingCustomer = sc.next();
+				existingCustomer = existingCustomer.toUpperCase();
 				
 				Client clientChoose = null;
 				
 				for(Client client : listClient) {
 					if(client.getIdC().equals(existingCustomer)) {
 						clientChoose = client;
-					
 					}
 				}
 				
-				if(currentDB.containsKey(existingCustomer)) {
-					System.out.println(currentDB.get(existingCustomer));
-				} else {
-					System.out.println("New current account to create");
-					generateCurrent(currentDB, sc, clientChoose);
-					System.out.println("Congratulation ! New current account is create");
-					for(String key : currentDB.keySet()) {
-						
-						System.out.println(currentDB.get(key)); 
-						System.out.println("-----------------");
+				if(clientChoose!=null) {
+					if(currentDB.containsKey(existingCustomer)) {
+						System.out.println(currentDB.get(existingCustomer));
+					} else {
+						System.out.println("New current account to create");
+						generateCurrent(currentDB, sc, clientChoose);
+						System.out.println("Congratulation ! New current account is create");
 					}
 					
+					if(savingsDB.containsKey(existingCustomer)) {
+						System.out.println(savingsDB.get(existingCustomer));
+					} else {
+						System.out.println("New saving account to create");
+						generateSavings(savingsDB, sc, clientChoose);
+						System.out.println("Congratulation ! New saving account is create");
+					}
+				} else {
+					System.out.println("The client doesn't exist !");
 				}
 				
-				if(savingsDB.containsKey(existingCustomer)) {
-					System.out.println(savingsDB.get(existingCustomer));
-				} else {
-					System.out.println("New saving account to create");
-					generateSavings(savingsDB, sc, clientChoose);
-					System.out.println("Congratulation ! New saving account is create");
-					for(String key : savingsDB.keySet()) {
-						
-						System.out.println(savingsDB.get(key)); 
-						System.out.println("-----------------");
-					}
-				}
+				
 				System.out.println(mainMenu());
 				choice1 = sc.nextInt();
-//				int choice2 = -1;
-//				while (choice2 != 4) {
-//					choice2 = sc.nextInt();
-//					while (choice2 > 4 || choice2 < 0) {
-//						choice2 = sc.nextInt();
-//					}
-//
-//					switch (choice2) {
-//
-//					case 1:
-//						break;
-//
-//					case 2:
-//						break;
-//
-//					case 3:
-//						break;
-//					}
-//
-//					break;
-//				}
+
 			case 2: // second sub-menu
 				String iDRandomC = generateIDCurrent();
 
 				System.out.println("Entrer le nom du nouveau client");
 				String newClient = sc.next();
-
+				
 				Client newOneClient = new Client(iDRandomC, newClient);
 				listClient.add(newOneClient);
-
+				
 				System.out.println("Pour Le Client : " + newClient + ", ID: " + iDRandomC + " souhaitez vous créer:"
 						+ "\nTapez: 1 puis Entrer pour un compte Courant"
 						+ "\nTapez: 2 puis Entrer pour un compte Epargne");
-
-				int value = Integer.parseInt(sc.next());
-
+				
 				int choice3 = -1;
 				while (choice3 != 3) {
 					choice3 = sc.nextInt();
-					while (choice3 > 3 || choice3 < 0) {
-						choice3 = sc.nextInt();
-					}
-					switch (choice3) {
+					while (choice3 < 3 || choice3 > 0) {
+						switch (choice3) {
+						case 1:
+							generateCurrent(currentDB, sc, newOneClient);
+							break;
 
-					case 1:
-						generateCurrent(currentDB, sc, newOneClient);
-						break;
-
-					case 2:
-						generateSavings(savingsDB, sc, newOneClient);
+						case 2:
+							generateSavings(savingsDB, sc, newOneClient);
+							break;
+						}
 						break;
 					}
+					
 					break;
 				}
+				System.out.println(mainMenu());
+				choice1 = sc.nextInt();
+			case 3 : 
+				System.out.println("Au revoir");
+				
+				
+				
 			}
 		}
 
-		// if user ou Admin
-
-//		int value = Integer.parseInt(scanner.next());
-//		if (value == 1) {
-//
-//			System.out.println("Liste des Clients:");
-//			int count = 1;
-//
-//			for (Client c : listClient) {
-//				System.out.println(count + ": " + c);
-//				count++;
-//			}
-//			System.out.println("Ecrivez son ID puis cliquer sur entrer.");
-//			String existingCustomer = scanner.next();
-
-		// création d'un compte épargne courant
-
-//		} else if (value == 2) {
-//			String iDRandomC = generateIDCurrent();
-//
-//			System.out.println("Entrer le nom du nouveau client");
-//			String newClient = scanner.next();
-//
-//			Client newOneClient = new Client(iDRandomC, newClient);
-//			listClient.add(newOneClient);
-//
-//			System.out.println("Pour Le Client : " + newClient + ", ID: " + iDRandomC + " souhaitez vous créer:"
-//					+ "\nTapez: 1 puis Entrer pour un compte Courant"
-//					+ "\nTapez: 2 puis Entrer pour un compte Epargne");
-//
-//			value = Integer.parseInt(scanner.next());
-//			if (value == 1) {
-//				generateCurrent(currentDB, scanner, newOneClient);
-//
-//			} else if (value == 2) {
-//				generateSavings(savingsDB, scanner, newOneClient);
-//
-//			}
-
-//		}
+	
 
 	}
 
