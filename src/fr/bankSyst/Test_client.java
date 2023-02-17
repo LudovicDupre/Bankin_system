@@ -11,12 +11,12 @@ public class Test_client {
 
 	static Scanner sc = new Scanner(System.in);
 	Client client = new Client();
-
+	
 	public static void main(String[] args)  {
 
-		HashMap<String, Savings> savingsDB =  intiSDB();
-		HashMap<String, Current> currentDB =  intiCDB();
-		ArrayList< Client> listClient   = initClient();
+		HashMap<String, Savings> savingsDB =  Data.intiSDB();
+		HashMap<String, Current> currentDB =  Data.intiCDB();
+		ArrayList< Client> listClient   = Data.initClient();
 
 		System.out.println("Who are you?"); // replace connexion
 		String identity = sc.next();
@@ -59,6 +59,7 @@ public class Test_client {
 				int amountT = sc.nextInt();
 				System.out.println("Please enter receiving account :");
 				String receivingId = sc.next();
+				//if (receivingId == accountS.getSavingsId()) break System.out.println("unauthorized operation");
 				double initBalanceDebit = accountS.getBalance();
 				double newBalanceDebit = Operation.withdrawal(accountS.getBalance(),amountT,0);
 				accountS.setBalance(newBalanceDebit);
@@ -130,53 +131,6 @@ public class Test_client {
 		}
 		System.out.println("GoodBye.");
 	}
-	/** initialization of the map object  
-	 * @return map of object epargne
-	 */
-	public static HashMap<String, Savings> intiSDB() {
-		HashMap<String, Savings> savingsDB = new HashMap<String, Savings>(); 
-		Savings e1 = new Savings("E605", 9000, 6);
-		Savings e2 = new  Savings("H685", 8000, 5);
-		Savings e3 = new  Savings("R965", 1500, 2);
-		Savings e4 = new  Savings("D874", 875, 5);
-		Savings e5 = new  Savings("H685", 7500, 5);
-		savingsDB.put("T65R", e1);
-		savingsDB.put("Z78Q", e2);
-		savingsDB.put("J546", e3);
-		savingsDB.put("M95L", e4);
-		savingsDB.put("A01B", e5);
-		return savingsDB;
-
-	}
-	/** initialization of the map of object courant 
-	 * @return map of object courant
-	 */
-	public static HashMap<String, Current> intiCDB() {
-		HashMap<String, Current> currentDB = new HashMap<String, Current>(); 
-		Current c1 =  new Current("G836", 6000, -500);
-		Current c2 = new  Current("Z513", 8750, -2500);
-		Current c3 = new  Current("D943", 4620, -400);
-		Current c4 = new  Current("F842", 4500, -300);
-		Current c5 = new  Current("A946", 7850, -1500);
-		currentDB.put("T65R", c1);
-		currentDB.put("Z78Q", c2);
-		currentDB.put("J546", c3);
-		currentDB.put("M95L", c4);
-		currentDB.put("A01B", c5);
-		return currentDB;
-	}
-	/** initialization client list
-	 * @return lclient list
-	 */
-	public static ArrayList<Client> initClient() {
-		ArrayList< Client> listClient   = new ArrayList<>();
-		listClient.add(new Client("T65R", "Dupont"));
-		listClient.add(new Client("Z78Q", "Fleury"));
-		listClient.add(new Client("J546", "Leroy"));
-		listClient.add(new Client("M95L", "Bonnet"));
-		listClient.add(new Client("A01B", "Moreau"));
-		return listClient;
-	}
 	/**
 	 * init main menu
 	 * @return main menu
@@ -201,3 +155,4 @@ public class Test_client {
 		return dateFormatted;
 	}
 }
+

@@ -9,44 +9,15 @@ public class Test_admin {
 
 	public static void main(String[] args) {
 
-		// init client
-		ArrayList<Client> listClient = new ArrayList<>();
-		listClient.add(new Client("T659", "Dupont"));
-		listClient.add(new Client("Z784", "Fleury"));
-		listClient.add(new Client("J546", "Leroy"));
-		listClient.add(new Client("M958", "Bonnet"));
-		listClient.add(new Client("A017", "Moreau"));
-
-		// init Admin
-		ArrayList<Admin> listAdmin = new ArrayList<>();
-		listAdmin.add(new Admin(1, "Ludovic"));
-		listAdmin.add(new Admin(2, "Raphael"));
-		listAdmin.add(new Admin(3, "Guillaume"));
-		listAdmin.add(new Admin(4, "Benoit"));
-
-		// init epargneDB
-		HashMap<String, Savings> savingsDB = new HashMap<String, Savings>();
-		savingsDB.put("T659", new Savings("T659", "Dupont", "E605", 9000, 6));
-		savingsDB.put("Z784", new Savings("Z784", "Fleury", "H685", 8000, 5));
-		savingsDB.put("J546", new Savings("J546", "Leroy", "R965", 1500, 2));
-		savingsDB.put("M958", new Savings("M958", "Bonnet", "D874", 875, 5));
-		savingsDB.put("A014", new Savings("A017", "Moreau", "H685", 7500, 5));
-
-		// init courantDB
-		HashMap<String, Current> currentDB = new HashMap<String, Current>();
-		currentDB.put("T659", new Current("T659", "Dupont", "G836", 6000, -500));
-		currentDB.put("Z784", new Current("Z784", "Fleury", "Z513", 8750, -2500));
-		currentDB.put("J546", new Current("J546", "Leroy", "D943", 4620, -400));
-		//currentDB.put("M958", new Current("M958", "Bonnet", "F842", 4500, -300));
-		currentDB.put("A017", new Current("A017", "Moreau", "A946", 7850, -1500));
+		HashMap<String, Savings> savingsDB =  Data.intiSDB();
+		HashMap<String, Current> currentDB =  Data.intiCDB();
+		ArrayList< Client> listClient   = Data.initClient();
+		
 
 		Scanner sc = new Scanner(System.in);
 
 		int choice1 = -1;
-		System.out.println(
-				"Souhaiter vous selectionnez un client existant ou créer un client? \nTapez: 1 puis Entrer pour selectionnez un client existant."
-						+ "\nTapez: 2 puis Entrer pour créer un nouveau client."
-						+ "\nTapez: 3 puis Entrer pour Quitter l'app");
+		System.out.println(mainMenu());
 		while (choice1 != 3) {
 			choice1 = sc.nextInt();
 			while (choice1 > 3 || choice1 < 0) {
@@ -56,14 +27,14 @@ public class Test_admin {
 
 			case 1: // first sub-menu
 
-				System.out.println("Liste des Clients:");
+				System.out.println("Client List:");
 				int count = 1;
 
 				for (Client c : listClient) {
 					System.out.println(count + ": " + c);
 					count++;
 				}
-				System.out.println("Ecrivez son ID puis cliquer sur entrer.");
+				System.out.println("Write his ID then press enter.");
 				String existingCustomer = sc.next();
 				
 				Client clientChoose = null;
@@ -101,10 +72,7 @@ public class Test_admin {
 						System.out.println("-----------------");
 					}
 				}
-				System.out.println(
-						"Souhaiter vous selectionnez un client existant ou créer un client? \nTapez: 1 puis Entrer pour selectionnez un client existant."
-								+ "\nTapez: 2 puis Entrer pour créer un nouveau client."
-								+ "\nTapez: 3 puis Entrer pour Quitter l'app");
+				System.out.println(mainMenu());
 				choice1 = sc.nextInt();
 //				int choice2 = -1;
 //				while (choice2 != 4) {
@@ -254,4 +222,9 @@ public class Test_admin {
 		return code;
 	}
 
-}
+ public static String mainMenu() {
+	 return "Do you wish to create a new client or find one already existing?\nPress: 1 then Enter to select a client."
+				+ "\nPress: 2 then Enter to create a new one."
+				+ "\nPress: 3 then Enter to leave the app.";
+ }
+ }
