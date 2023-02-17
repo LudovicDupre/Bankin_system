@@ -18,7 +18,7 @@ public class Test_client {
 
 		HashMap<String, Savings> savingsDB =  Data.intiSDB();
 		HashMap<String, Current> currentDB =  Data.intiCDB();
-		ArrayList< Client> listClient   = Data.initClient();
+		//ArrayList< Client> listClient   = Data.initClient();
 		HashMap<String, Transaction> transactionDB = Data.initTransaction();
 		System.out.println("Who are you?"); // replace connexion
 		String identity = sc.next();
@@ -224,7 +224,7 @@ public class Test_client {
 		for(Entry<String, Transaction> entry : map.entrySet()) {
 			String key = entry.getKey();
 			Transaction value = entry.getValue();
-			listPart +=  "ID : "+key+"; Info transaction "+value+"\n";
+			listPart +=  "ID transaction: "+key+"; Info transaction : "+value+"\n";
 		}
 		return listPart;
 	}

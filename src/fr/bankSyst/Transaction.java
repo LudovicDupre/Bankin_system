@@ -54,8 +54,8 @@ public class Transaction {
 	
 	@Override
 	public String toString() {
-		return "Transaction [amount=" + amount + ", date=" + date + ", receivingAccount=" + receivingAccount
-				+ ", sendingAccount=" + sendingAccount + ", Transaction n° =]";
+		return "[amount=" + amount + ", date=" + date + ", receivingAccount=" + receivingAccount
+				+ ", sendingAccount=" + sendingAccount +" ]";
 	}
 	
 }
