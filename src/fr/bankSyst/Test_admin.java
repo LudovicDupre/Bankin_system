@@ -26,7 +26,7 @@ public class Test_admin {
 
 		// init epargneDB
 		HashMap<String, Savings> savingsDB = new HashMap<String, Savings>();
-		savingsDB.put("T657", new Savings("T659", "Dupont", "E605", 9000, 6));
+		savingsDB.put("T659", new Savings("T659", "Dupont", "E605", 9000, 6));
 		savingsDB.put("Z784", new Savings("Z784", "Fleury", "H685", 8000, 5));
 		savingsDB.put("J546", new Savings("J546", "Leroy", "R965", 1500, 2));
 		savingsDB.put("M958", new Savings("M958", "Bonnet", "D874", 875, 5));
@@ -37,7 +37,7 @@ public class Test_admin {
 		currentDB.put("T659", new Current("T659", "Dupont", "G836", 6000, -500));
 		currentDB.put("Z784", new Current("Z784", "Fleury", "Z513", 8750, -2500));
 		currentDB.put("J546", new Current("J546", "Leroy", "D943", 4620, -400));
-		currentDB.put("M958", new Current("M958", "Bonnet", "F842", 4500, -300));
+		//currentDB.put("M958", new Current("M958", "Bonnet", "F842", 4500, -300));
 		currentDB.put("A017", new Current("A017", "Moreau", "A946", 7850, -1500));
 
 		Scanner sc = new Scanner(System.in);
@@ -46,7 +46,7 @@ public class Test_admin {
 		System.out.println(
 				"Souhaiter vous selectionnez un client existant ou créer un client? \nTapez: 1 puis Entrer pour selectionnez un client existant."
 						+ "\nTapez: 2 puis Entrer pour créer un nouveau client."
-						+ "Tapez: 3puis Entrer pour Quitter l'app");
+						+ "\nTapez: 3 puis Entrer pour Quitter l'app");
 		while (choice1 != 3) {
 			choice1 = sc.nextInt();
 			while (choice1 > 3 || choice1 < 0) {
@@ -65,28 +65,68 @@ public class Test_admin {
 				}
 				System.out.println("Ecrivez son ID puis cliquer sur entrer.");
 				String existingCustomer = sc.next();
-
-				int choice2 = -1;
-				while (choice2 != 4) {
-					choice2 = sc.nextInt();
-					while (choice2 > 4 || choice2 < 0) {
-						choice2 = sc.nextInt();
+				
+				Client clientChoose = null;
+				
+				for(Client client : listClient) {
+					if(client.getIdC().equals(existingCustomer)) {
+						clientChoose = client;
+					
 					}
-
-					switch (choice2) {
-
-					case 1:
-						break;
-
-					case 2:
-						break;
-
-					case 3:
-						break;
-					}
-
-					break;
 				}
+				
+				if(currentDB.containsKey(existingCustomer)) {
+					System.out.println(currentDB.get(existingCustomer));
+				} else {
+					System.out.println("New current account to create");
+					generateCurrent(currentDB, sc, clientChoose);
+					System.out.println("Congratulation ! New current account is create");
+					for(String key : currentDB.keySet()) {
+						
+						System.out.println(currentDB.get(key)); 
+						System.out.println("-----------------");
+					}
+					
+				}
+				
+				if(savingsDB.containsKey(existingCustomer)) {
+					System.out.println(savingsDB.get(existingCustomer));
+				} else {
+					System.out.println("New saving account to create");
+					generateSavings(savingsDB, sc, clientChoose);
+					System.out.println("Congratulation ! New saving account is create");
+					for(String key : savingsDB.keySet()) {
+						
+						System.out.println(savingsDB.get(key)); 
+						System.out.println("-----------------");
+					}
+				}
+				System.out.println(
+						"Souhaiter vous selectionnez un client existant ou créer un client? \nTapez: 1 puis Entrer pour selectionnez un client existant."
+								+ "\nTapez: 2 puis Entrer pour créer un nouveau client."
+								+ "\nTapez: 3 puis Entrer pour Quitter l'app");
+				choice1 = sc.nextInt();
+//				int choice2 = -1;
+//				while (choice2 != 4) {
+//					choice2 = sc.nextInt();
+//					while (choice2 > 4 || choice2 < 0) {
+//						choice2 = sc.nextInt();
+//					}
+//
+//					switch (choice2) {
+//
+//					case 1:
+//						break;
+//
+//					case 2:
+//						break;
+//
+//					case 3:
+//						break;
+//					}
+//
+//					break;
+//				}
 			case 2: // second sub-menu
 				String iDRandomC = generateIDCurrent();
 
@@ -191,11 +231,11 @@ public class Test_admin {
 		currentDB.put(newOneClient.getIdC(),
 				new Current(newOneClient.getIdC(), newOneClient.getName(), iDRandomCurrent, 0, -authorizedOverdraft));
 
-		for (String c : currentDB.keySet()) {
-			if (c == newOneClient.getIdC()) {
-				System.out.println("Trouvé " + currentDB.get(c));
-			}
-		}
+//		for (String c : currentDB.keySet()) {
+//			if (c == newOneClient.getIdC()) {
+//				System.out.println("Trouvé " + currentDB.get(c));
+//			}
+//		}
 	}
 
 	private static String generateIDCurrent() {
