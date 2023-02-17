@@ -41,4 +41,10 @@ public class Data {
 		listClient.add(new Client("A017", "Moreau"));
 		return listClient;
 	}
+	
+	public static HashMap<Integer, Transaction> initTransaction() {
+		HashMap<Integer, Transaction> transactionDB = new HashMap<Integer, Transaction>();
+		return transactionDB;
+	}
+	
 }
