@@ -42,8 +42,8 @@ public class Data {
 		return listClient;
 	}
 	
-	public static HashMap<Integer, Transaction> initTransaction() {
-		HashMap<Integer, Transaction> transactionDB = new HashMap<Integer, Transaction>();
+	public static HashMap<String, Transaction> initTransaction() {
+		HashMap<String, Transaction> transactionDB = new HashMap<String, Transaction>();
 		return transactionDB;
 	}
 	

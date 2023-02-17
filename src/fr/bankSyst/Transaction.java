@@ -3,30 +3,33 @@ package fr.bankSyst;
 public class Transaction {
 
 	// attributs
-	Integer amount;
+	double amount;
 	String date;
 	String receivingAccount;
 	String sendingAccount;
-	public int counter;
-	
-	
-	
 
-
-	public Transaction(Integer amount, String date, String receivingAccount, String sendingAccount) {
+	
+	
+	public Transaction(double amount, String date, String receivingAccount, String sendingAccount) {
 		super();
 		this.amount = amount;
 		this.date = date;
 		this.receivingAccount = receivingAccount;
 		this.sendingAccount = sendingAccount;
-		counter ++;
+
+	}
+	public Transaction(double amount, String date, String receivingAccount) {
+		super();
+		this.amount = amount;
+		this.date = date;
+		this.receivingAccount = receivingAccount;
+
 	}
 	
-	
-	public Integer getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(Integer amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public String getDate() {
@@ -48,8 +51,11 @@ public class Transaction {
 		this.sendingAccount = sendingAccount;
 	}
 	
-	public int getCounter() {
-		return counter;
+	
+	@Override
+	public String toString() {
+		return "Transaction [amount=" + amount + ", date=" + date + ", receivingAccount=" + receivingAccount
+				+ ", sendingAccount=" + sendingAccount + ", Transaction n° =]";
 	}
 	
 }

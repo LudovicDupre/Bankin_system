@@ -3,7 +3,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Map.Entry;
 /**
  * @author Les jeunes avec Macron
  */
@@ -17,7 +19,7 @@ public class Test_client {
 		HashMap<String, Savings> savingsDB =  Data.intiSDB();
 		HashMap<String, Current> currentDB =  Data.intiCDB();
 		ArrayList< Client> listClient   = Data.initClient();
-
+		HashMap<String, Transaction> transactionDB = Data.initTransaction();
 		System.out.println("Who are you?"); // replace connexion
 		String identity = sc.next();
 
@@ -42,12 +44,16 @@ public class Test_client {
 				case 1: System.out.println("Please enter amount you wish to withdraw :");
 				double amountW = sc.nextDouble();
 				withdrawalS(accountS,amountW);
+				//dateTransaction stored
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
 				case 2:		System.out.println("Please enter amount you wish to deposit :");
 				double amountD = sc.nextDouble();
 				depositS(accountS,amountD);
+				String date = dateTransaction(); 
+				addTransaction(buildingTransaction(date,amountD, accountS.getIdC(),""),transactionDB);
+				System.out.println(iteMap(transactionDB));
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
@@ -64,6 +70,7 @@ public class Test_client {
 					String receivingId = sc.next();
 					depositC(currentDB.get(receivingId),amountT);
 					System.out.println(dateTransaction());
+					//dateTransaction stored
 					System.out.println("Back to operation menu\n\n"+opMenu());
 					break;
 				}
@@ -85,12 +92,14 @@ public class Test_client {
 				case 1: System.out.println("Please enter amount you wish to withdraw :");
 				double amountW = sc.nextDouble();
 				withdrawalC(accountC,amountW);
+				//dateTransaction stored
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
 				case 2: 		System.out.println("Please enter amount you wish to deposit :");
 				double amountD = sc.nextDouble();
 				depositC(accountC,amountD);
+				//dateTransaction stored
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
@@ -108,6 +117,7 @@ public class Test_client {
 					depositC(currentDB.get(receivingId),amountT);
 					System.out.println(dateTransaction());
 					System.out.println("Back to operation menu\n\n"+opMenu());
+					//dateTransaction stored
 					break;
 				}
 				}
@@ -185,5 +195,37 @@ public class Test_client {
 		System.out.println(S+"\n");
 		return S;
 	}
+	public static Transaction buildingTransaction(String date, double amount, String receivingAccount, String sendingAccount) {
+		if (sendingAccount == "") {
+			Transaction transaction = new Transaction( amount,  date,  receivingAccount);
+			return transaction;
+		} else {
+			Transaction transaction = new Transaction( amount,  date,  receivingAccount, sendingAccount);
+			return transaction;
+		}
+	}
+	public static HashMap<String, Transaction> addTransaction(Transaction T, HashMap<String, Transaction> m) {
+		
+		m.put(randomId(), T);
+		return m;
+	}
+	private static String randomId() {
+		String passwordSet = "0123456789";
+		char[] password = new char[8];
+		for(int i=0; i<8;i++) {
+			int rand =(int) (Math.random()*passwordSet.length());
+			password[i] = passwordSet.charAt(rand);
+		}
+		return new String(password);
+	}
+	public static String iteMap(HashMap<String, Transaction> map) {
 
+		String listPart ="List of Transaction:\n";
+		for(Entry<String, Transaction> entry : map.entrySet()) {
+			String key = entry.getKey();
+			Transaction value = entry.getValue();
+			listPart +=  "ID : "+key+"; Info transaction "+value+"\n";
+		}
+		return listPart;
+	}
 }
