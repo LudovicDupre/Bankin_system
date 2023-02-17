@@ -37,8 +37,8 @@ public class Data {
 		listClient.add(new Client("T659", "Dupont"));
 		listClient.add(new Client("Z784", "Fleury"));
 		listClient.add(new Client("J546", "Leroy"));
-		listClient.add(new Client("M95L", "Bonnet"));
-		listClient.add(new Client("A01B", "Moreau"));
+		listClient.add(new Client("M958", "Bonnet"));
+		listClient.add(new Client("A017", "Moreau"));
 		return listClient;
 	}
 }
