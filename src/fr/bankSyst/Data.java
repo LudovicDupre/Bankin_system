@@ -34,11 +34,11 @@ public class Data {
 	 */
 	public static ArrayList<Client> initClient() {
 		ArrayList< Client> listClient   = new ArrayList<>();
-		listClient.add(new Client("T65R", "Dupont"));
-		listClient.add(new Client("Z78Q", "Fleury"));
+		listClient.add(new Client("T659", "Dupont"));
+		listClient.add(new Client("Z784", "Fleury"));
 		listClient.add(new Client("J546", "Leroy"));
-		listClient.add(new Client("M95L", "Bonnet"));
-		listClient.add(new Client("A01B", "Moreau"));
+		listClient.add(new Client("M958", "Bonnet"));
+		listClient.add(new Client("A017", "Moreau"));
 		return listClient;
 	}
 }

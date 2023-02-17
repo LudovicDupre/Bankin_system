@@ -173,7 +173,12 @@ public class Test_admin {
 //		}
 
 	}
-
+/**
+ *   method to generate object saving
+ * @param savingsDB 
+ * @param scanner input user
+ * @param newOneClient
+ */
 	private static void generateSavings(HashMap<String, Savings> savingsDB, Scanner scanner, Client newOneClient) {
 		System.out.println("Choisir un taux d'intérêts: ");
 		int interestsRate = Integer.parseInt(scanner.next());
