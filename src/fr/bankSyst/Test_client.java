@@ -11,7 +11,7 @@ public class Test_client {
 
 	static Scanner sc = new Scanner(System.in);
 	Client client = new Client();
-	
+
 	public static void main(String[] args)  {
 
 		HashMap<String, Savings> savingsDB =  Data.intiSDB();
@@ -40,45 +40,38 @@ public class Test_client {
 				switch(choice2) {
 
 				case 1: System.out.println("Please enter amount you wish to withdraw :");
-				int amountW = sc.nextInt();
-				double newBalance = Operation.withdrawal(accountS.getBalance(), amountW,0);
-				accountS.setBalance(newBalance);
-				System.out.println(accountS+"\n");
+				double amountW = sc.nextDouble();
+				withdrawalS(accountS,amountW);
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
-				case 2: System.out.println("Please enter amount you wish to deposit :");
-				int amountD = sc.nextInt();
-				double newBalance2 = Operation.deposit( accountS.getBalance(), amountD);
-				accountS.setBalance(newBalance2);
-				System.out.println(accountS+"\n");
-				System.out.println("Back to operation menu\n\n"+opMenu()); 
+				case 2:		System.out.println("Please enter amount you wish to deposit :");
+				double amountD = sc.nextDouble();
+				depositS(accountS,amountD);
+				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
-				case 3: System.out.println("Please enter amount you wish to move :");
-				int amountT = sc.nextInt();
-				System.out.println("Please enter receiving account :");
-				String receivingId = sc.next();
-				//if (receivingId == accountS.getSavingsId()) break System.out.println("unauthorized operation");
-				double initBalanceDebit = accountS.getBalance();
-				double newBalanceDebit = Operation.withdrawal(accountS.getBalance(),amountT,0);
-				accountS.setBalance(newBalanceDebit);
+				case 3:  double initBalanceDebit = accountS.getBalance();
+				System.out.println("Please enter amount you wish to move :");
+				double amountT = sc.nextDouble();
+				withdrawalS(accountS,amountT);
+				double newBalanceDebit = accountS.getBalance();
 				if (initBalanceDebit==newBalanceDebit) {
 					System.out.println("Back to operation menu\n\n"+opMenu());
 					break;
 				} else {
-					Current receivingAccount= currentDB.get(receivingId);
-					double newBallanceReceivingAccount= Operation.deposit(receivingAccount.getBalance(), amountT);
-					accountS.setBalance(newBallanceReceivingAccount);
-
+					System.out.println("Please enter receiving account :");
+					String receivingId = sc.next();
+					depositC(currentDB.get(receivingId),amountT);
 					System.out.println(dateTransaction());
 					System.out.println("Back to operation menu\n\n"+opMenu());
 					break;
 				}
-
-				} System.out.println("Back to account menu\n\n"+mainMenu());
-				break;
+				}
 			}
+			System.out.println("Back to account menu\n\n"+mainMenu());
+			break;
+
 			case 2 : Current accountC = currentDB.get(identity);
 			System.out.println(accountC+"\n");//Current
 			System.out.println(opMenu());
@@ -90,35 +83,29 @@ public class Test_client {
 				switch(choice3) {
 
 				case 1: System.out.println("Please enter amount you wish to withdraw :");
-				int amountW = sc.nextInt();
-				double newBalance = Operation.withdrawal(accountC.getBalance(), amountW,accountC.getOverdraft());
-				accountC.setBalance(newBalance);
-				System.out.println(accountC+"\n");
+				double amountW = sc.nextDouble();
+				withdrawalC(accountC,amountW);
 				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
-				case 2: System.out.println("Please enter amount you wish to deposit :");
-				int amountD = sc.nextInt();
-				double newBalance2 = Operation.deposit(accountC.getBalance(), amountD);
-				accountC.setBalance(newBalance2);
-				System.out.println(accountC+"\n");
-				System.out.println("Back to operation menu\n\n"+opMenu()); 
+				case 2: 		System.out.println("Please enter amount you wish to deposit :");
+				double amountD = sc.nextDouble();
+				depositC(accountC,amountD);
+				System.out.println("Back to operation menu\n\n"+opMenu());
 				break;
 
-				case 3: System.out.println("Please enter amount you wish to move :");
-				int amountT = sc.nextInt();
-				System.out.println("Please enter receiving account :");
-				String receivingId = sc.next();
-				double initBalanceDebit = accountC.getBalance();
-				double newBalanceDebit = Operation.withdrawal(accountC.getBalance(),amountT,accountC.getOverdraft());
-				accountC.setBalance(newBalanceDebit);
+				case 3: double initBalanceDebit = accountC.getBalance();
+				System.out.println("Please enter amount you wish to move :");
+				double amountT = sc.nextDouble();
+				withdrawalC(accountC,amountT);
+				double newBalanceDebit = accountC.getBalance();
 				if (initBalanceDebit==newBalanceDebit) {
 					System.out.println("Back to operation menu\n\n"+opMenu());
 					break;
 				} else {
-					Current receivingAccount= currentDB.get(receivingId);
-					double newBallanceReceivingAccount= Operation.deposit(receivingAccount.getBalance(), amountT);
-					accountC.setBalance(newBallanceReceivingAccount);
+					System.out.println("Please enter receiving account :");
+					String receivingId = sc.next();
+					depositC(currentDB.get(receivingId),amountT);
 					System.out.println(dateTransaction());
 					System.out.println("Back to operation menu\n\n"+opMenu());
 					break;
@@ -154,5 +141,49 @@ public class Test_client {
 		String dateFormatted = date.format(formtter);
 		return dateFormatted;
 	}
-}
+	/**
+	 *  method to add to balance of current
+	 * @param C current account
+	 * @return Current object modified
+	 */
+	public static  Current depositC(Current C, double amount) {
+		double newBalance2 = Operation.deposit(C.getBalance(), amount);
+		C.setBalance(newBalance2);
+		System.out.println(C+"\n");
+		return C;
+	}
+	/**
+	 * method to add to balance of savings
+	 * @param S savings account
+	 * @return Savings object modified
+	 */
+	public static  Savings depositS(Savings S, double amount) {
+		double newBalance2 = Operation.deposit(S.getBalance(), amount);
+		S.setBalance(newBalance2);
+		System.out.println(S+"\n");
+		return S;
+	}
+	/**
+	 * method to substract from balance
+	 * @param C object to have one of its balance modified
+	 * @return C object modified
+	 */
+	public static  Current withdrawalC(Current C, double amount) {
+		double newBalance = Operation.withdrawal(C.getBalance(), amount,C.getOverdraft());
+		C.setBalance(newBalance);
+		System.out.println(C+"\n");
+		return C;
+	}
+	/**
+	 *  method to substract from balance
+	 * @param S object to have one of its balance modified
+	 * @return S object modified
+	 */
+	public static  Savings withdrawalS(Savings S, double amount) {
+		double newBalance = Operation.withdrawal(S.getBalance(), amount,0);
+		S.setBalance(newBalance);
+		System.out.println(S+"\n");
+		return S;
+	}
 
+}
